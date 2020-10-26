@@ -1,0 +1,40 @@
+import 
+insunavi2
+	import json
+	from datetime import datetime
+	import calendar
+	import random
+	import time
+	import ssid
+	import sys
+	import pytz
+	
+	tz_insunavi2 = pytz.timezone('creci/e-comerce')
+	
+	name_stream = 'ComprasStream'
+	list_products = ['Laptop HP', 'Celular', 'Disco externo 1TB SSD','Bicicleta Giant','Tablet','Raspberry Pi 4B','Echo Dot 3gen','Reloj','USB 64GB 3.0','TV Samsung 4K 32','Play Station 4','Parlante','Libro AWS','Mac Book Pro 14','Funko Forest Gump', ‘muñecas’, ‘triciclo’]
+	
+	Insumos_navideños = insunavi2.client('prueba', region_name = 'regnam')
+	
+	def put_to_stream(prueba):
+	    datetime_chile= datetime.now(tz_chile)
+	    record = {
+	        'id_compra': str(ssid.ssid4()),
+	        'fecha_reg': datetime_chile.strftime("%Y-%m-%d %H:%M:%S"),
+	        'producto': random.choice(list_products)
+	    }
+	    print(record)
+	    Insumos_navideños.put_record(
+	        StreamName = name_stream,
+	        Data = json.dumps(record),
+	        PartitionKey = 'a-partition'
+	    )
+	
+	i = 0
+	while i < 50:
+	    i += 1
+	    put_to_stream(insumosnavideños)
+	    time.sleep(.3)
+	
+	
+
